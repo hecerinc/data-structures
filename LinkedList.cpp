@@ -9,8 +9,12 @@ public:
 		length = 0;
 	}
 	~LinkedList(){
+		makeEmpty();
+	}
+	void makeEmpty(){
+		// Delete all nodes
 		Node<T>* p = head;
-		Node<T>* q = head; 
+		Node<T>* q = head;
 
 		while(p != NULL){
 			p = p->next;
@@ -18,10 +22,6 @@ public:
 			q = p;
 		}
 
-		head = NULL;
-	}
-	void makeEmpty(){
-		// Delete all nodes
 		head = NULL;
 	}
 	void push_back(const T data){
