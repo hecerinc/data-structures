@@ -58,9 +58,6 @@ public:
 		temp = prev = NULL;
 		length--;
 	}
-	LinkedList<T> mergeList(LinkedList<T> a){
-
-	}
 	T getItem(int index){
 		Node<T>* p = head;
 		int i = 0;
@@ -74,7 +71,20 @@ public:
 		}
 		return NULL;
 	}
-	
+	void reverse(){
+		Node<T>* previous;
+		Node<T>* current;
+		Node<T>* next;
+		previous = NULL;
+		current = this->head;
+		while(current != NULL){
+			next = current->next;
+			current->next = previous;
+			previous = current;
+			current = next;
+		}
+		head = previous;
+	}
 	bool isEmpty(){return head == NULL;}
 	int getLength(){return length;}
 
