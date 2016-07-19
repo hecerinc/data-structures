@@ -15,6 +15,9 @@ The API that they offer is very simple:
 - `length` property
 - `isEmpty` observer
 
+### Linked List
+
+- `reverse` method
 
 ## TODO
 
