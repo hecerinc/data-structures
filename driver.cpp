@@ -1,8 +1,9 @@
 #include <iostream>
-#include "LinkedList.cpp"
+#include "Stack.cpp"
 int main(){
-	LinkedList<int> a;
+	Stack<int> a;
 	for (int i = 1; i <= 90; i++)
-		a.push_back(i);
+		a.push(i);
+	a.pop();
 	a.print();
 }
