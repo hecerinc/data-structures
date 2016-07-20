@@ -98,7 +98,20 @@ public:
 		}
 		std::cout << std::endl;
 	}
-private:
+	static void FrontBackSplit(Node<T>* source, Node<T>** frontRef, Node<T>** backRef){
+		Node<T>* tmp = new Node<T>;
+		Node<T>* p = tmp;
+		Node<T>* f = tmp;
+		tmp->next = source;
+		while(p != NULL && p->next != NULL){
+			p = p->next->next;
+			f = f->next;
+		}
+		*backRef = f->next;
+		f->next = NULL;
+		*frontRef = source;
+	}
 	Node<T>* head;
+private:
 	int length;
 };

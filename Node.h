@@ -1,3 +1,4 @@
+#ifndef NODE
 template<typename T>
 struct Node {
 	T data;
@@ -6,4 +7,9 @@ struct Node {
 		this->data = data;
 		next = NULL;
 	}
+	Node(){
+		this->data = NULL;
+		next = NULL;
+	}
 };
+#endif
