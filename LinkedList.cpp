@@ -167,6 +167,17 @@ public:
 	static Node<T>** minNode(Node<T>** a, Node<T>**b){
 		return ((*a)->data < (*b)->data) ? a : b;
 	}
+	static void MergeSort(Node<T>** headRef){
+		Node<T>* h = *headRef;
+		if(h != NULL && h->next != NULL){
+			Node<T>* a;
+			Node<T>* b;
+			FrontBackSplit(h, &a, &b);
+			MergeSort(&a);
+			MergeSort(&b);
+			*headRef = SortedMerge(a, b);
+		}
+	}
 	Node<T>* head;
 private:
 	int length;
