@@ -1,6 +1,6 @@
 #include "Node.h"
 #include <iostream>
-
+#include <cassert>
 template<typename T>
 class LinkedList {
 public:
@@ -98,6 +98,9 @@ public:
 		}
 		std::cout << std::endl;
 	}
+
+	// Methods from Linked Lists Problems
+
 	static void FrontBackSplit(Node<T>* source, Node<T>** frontRef, Node<T>** backRef){
 		Node<T>* tmp = new Node<T>;
 		Node<T>* p = tmp;
@@ -110,6 +113,52 @@ public:
 		*backRef = f->next;
 		f->next = NULL;
 		*frontRef = source;
+	}
+	static void moveNode(Node<T>** destRef, Node<T>** sourceRef){
+		assert(*sourceRef != NULL);
+		int val = Pop(&(*sourceRef));
+		Push(&(*destRef), val);
+	}
+	static int Pop(Node<T>** headRef){
+		assert(*headRef != NULL);
+		Node<T>* p = *headRef;
+		*headRef = (*headRef)->next;
+		int data = p->data;
+		delete p;
+		return data;
+	}
+	static void Push(Node<T>** headRef, int newData){
+		Node<T>* p = new Node<T>(newData);
+		p->next = *headRef;
+		*headRef = p;
+	}
+	static Node<T>* shuffleMerge(Node<T>* a, Node<T>* b){
+		Node<T>* h = NULL;
+		Node<T>** p = &h;
+		while(a != NULL && b != NULL){
+			if(a != NULL){
+				moveNode(p, &a);
+				p = &((*p)->next);
+			}
+			if(b != NULL){
+				moveNode(p, &b);
+				p = &((*p)->next);
+			}
+		}
+		return h;
+	}
+	static Node<T>* SortedMerge(Node<T>* a, Node<T>* b){
+		Node<T>* h = NULL; // head
+		while(a != NULL && b != NULL)
+			moveNode(&h, minNode(&a, &b));
+		while(a != NULL)
+			moveNode(&h, &a);
+		while(b != NULL)
+			moveNode(&h, &b);
+		return h;
+	}
+	static Node<T>** minNode(Node<T>** a, Node<T>**b){
+		return ((*a)->data < (*b)->data) ? a : b;
 	}
 	Node<T>* head;
 private:
