@@ -149,12 +149,19 @@ public:
 	}
 	static Node<T>* SortedMerge(Node<T>* a, Node<T>* b){
 		Node<T>* h = NULL; // head
-		while(a != NULL && b != NULL)
-			moveNode(&h, minNode(&a, &b));
-		while(a != NULL)
-			moveNode(&h, &a);
-		while(b != NULL)
-			moveNode(&h, &b);
+		Node<T>** p = &h;
+		while(a != NULL && b != NULL){
+			moveNode(p, minNode(&a, &b));
+			p = &((*p)->next);
+		}
+		while(a != NULL){
+			moveNode(p, &a);
+			p = &((*p)->next);
+		}
+		while(b != NULL){
+			moveNode(p, &b);
+			p = &((*p)->next);
+		}
 		return h;
 	}
 	static Node<T>** minNode(Node<T>** a, Node<T>**b){
