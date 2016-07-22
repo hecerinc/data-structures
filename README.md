@@ -24,6 +24,7 @@ The API that they offer is very simple:
 - Circular List
 - Circular Queue
 - Doubly linked list
+- Copy method of Binary Tree
 
 
 ## License
