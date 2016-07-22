@@ -1,25 +1,19 @@
 #include <iostream>
-#include "LinkedList.cpp"
+#include "NodeTree.h"
+#include "BinaryTree.h"
 using namespace std;
 int main(){
-	LinkedList<int> a;
-	// LinkedList<int> b;
-	a.push_back(2);
-	a.push_back(1);
-	a.push_back(3);
-	a.push_back(4);
-	a.push_back(6);
-	a.push_back(5);
-
+	BinaryTree<int> a;
+	a.insert(21);
+	a.insert(13);
+	a.insert(33);
+	a.insert(10);
+	a.insert(18);
+	a.insert(25);
+	a.insert(40);
 	a.print();
-	LinkedList<int>::MergeSort(&a.head);
-	cout << endl << endl;
-
-	// while(p != NULL){
-	// 	cout << p -> data << " -> ";
-	// 	p = p->next;
-	// }
-	// cout << "|| " << endl << endl; 
+	cout << a.length() << endl;
+	a.remove(21);
 	a.print();
-	// b.print();	
+	cout << a.length() << endl;
 }

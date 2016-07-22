@@ -1,4 +1,5 @@
-#ifndef NODE
+#ifndef Node_Structure
+#define Node_Structure
 template<typename T>
 struct Node {
 	T data;
