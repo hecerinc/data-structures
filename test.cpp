@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "LinkedList.cpp"
 #include "NodeTree.h"
 using namespace std;
@@ -11,14 +12,19 @@ LinkedList<int>* merge(NodeTree<int>* a, NodeTree<int>* b){
 		result->push_back(b->data);
 	return result;
 }
-void listDepths(NodeTree<int>* root, LinkedList<int> arr[], int i){
+void listDepths(NodeTree<int>* root, vector< LinkedList<int>* >& arr, int level){
 	if(root == NULL)
 		return;
-	LinkedList<int>* list = merge(root->left, root->right);
-	// (*list).print();
-	arr[i].append(*list);
-	listDepths(root->left, arr, i+1);
-	listDepths(root->right, arr, i+1);
+	LinkedList<int>* a = NULL;
+	if(level == arr.size()){
+		a = new LinkedList<int>();
+		arr.push_back(a);
+	}
+	else
+		a = arr[level];
+	arr[level]->push_back(root->data);
+	listDepths(root->left, arr, level + 1);
+	listDepths(root->right, arr, level + 1);
 }
 int main(){
 	NodeTree<int>* root = new NodeTree<int>(7);
@@ -36,12 +42,13 @@ int main(){
 	p->right = new NodeTree<int>(17);
 	p->left->right = new NodeTree<int>(12);
 
-	LinkedList<int> arr[5];
-	NodeTree<int>* dummy = new NodeTree<int>();
-	dummy->right = root;
-	listDepths(dummy, arr, 0);
+	// LinkedList<int> arr[5];
+	vector< LinkedList<int>* > arr;
+	// NodeTree<int>* dummy = new NodeTree<int>();
+	// dummy->right = root;
+	listDepths(root, arr, 0);
 	for (int i = 0; i < 5; i++) {
-		arr[i].print();
+		arr[i]->print();
 	}
 
 }
