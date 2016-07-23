@@ -24,6 +24,22 @@ public:
 
 		head = NULL;
 	}
+	void append(LinkedList<T> b){
+		T data;
+		while(data = b.pop()){
+			push_back(data);
+		}
+	}
+	T pop(){
+		Node<T>* p = this->head;
+		if(p == NULL)
+			return NULL;
+		this->head = p->next;
+		p->next = NULL;
+		T data = p->data;
+		delete p;
+		return data;
+	}
 	void push_back(const T data){
 		Node<T>* p = new Node<T>(data);
 		// Assume we only have head

@@ -1,14 +1,15 @@
 #ifndef Node_Tree_Structure
 #define Node_Tree_Structure
 template<typename T>
-struct Node {
+struct NodeTree {
 	T data;
-	Node<T>* left;
-	Node<T>* right;
-	Node(T data){
+	NodeTree<T>* left;
+	NodeTree<T>* right;
+	NodeTree(T data){
 		this->data = data;
 		left = right = NULL;
 	}
-	Node(){data = left = right = NULL; }
+	NodeTree(){data = NULL;
+		left = right = NULL; }
 };
 #endif
