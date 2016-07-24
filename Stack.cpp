@@ -16,13 +16,15 @@ public:
 		head = p;
 		length++;
 	}
-	void pop(){
+	T pop(){
 		if(head == NULL)
-			return;
+			return NULL;
 		Node<T>* p = head;
+		T data = p->data;
 		head = head->next;
 		delete p;
 		length--;
+		return data;
 	}
 	T top(){
 		if(head == NULL)
