@@ -1,19 +1,18 @@
 #include <iostream>
-#include "NodeTree.h"
-#include "BinaryTree.h"
+#include "PriorityQueue.h"
 using namespace std;
 int main(){
-	BinaryTree<int> a;
-	a.insert(21);
-	a.insert(13);
-	a.insert(33);
-	a.insert(10);
-	a.insert(18);
-	a.insert(25);
-	a.insert(40);
-	a.print();
-	cout << a.length() << endl;
-	a.remove(21);
-	a.print();
-	cout << a.length() << endl;
+	PriorityQueue<int> a(10);
+	a.Enqueue(10);
+	a.Enqueue(7);
+	a.Enqueue(25);
+	a.Enqueue(12);
+	a.Enqueue(8);
+	a.Enqueue(4);
+	int b;
+	a.Dequeue(b);
+	cout << b << endl;
+	int c;
+	a.Dequeue(c);
+	cout << c << endl;
 }
