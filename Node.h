@@ -9,7 +9,7 @@ struct Node {
 		next = NULL;
 	}
 	Node(){
-		this->data = NULL;
+		// this->data = NULL;
 		next = NULL;
 	}
 };

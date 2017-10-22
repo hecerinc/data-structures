@@ -23,6 +23,7 @@ public:
 		}
 
 		head = NULL;
+		this->length = 0;
 	}
 	void push_back(const T data){
 		Node<T>* p = new Node<T>(data);
@@ -30,13 +31,14 @@ public:
 		Node<T>* temp = head;
 		if(temp == NULL){
 			head = p;
+			this->length = 1;
 			return;
 		}
 		while(temp->next != NULL){
 			temp = temp->next;
 		}
 		temp->next = p;
-		length++;
+		this->length = this->length + 1;
 	}
 	void deleteItem(const T data){
 		Node<T>* temp = head;
@@ -56,20 +58,26 @@ public:
 		prev->next = temp->next;
 		delete temp;
 		temp = prev = NULL;
-		length--;
+		this->length = this->length - 1;
 	}
-	T getItem(int index){
+	T getItem(int index) const{
 		Node<T>* p = head;
 		int i = 0;
-		if(index > length-1)
-			return NULL;
+		if(index > length-1){
+			throw 1;
+		}
 		while(p != NULL){
 			if(i == index)
 				return p->data;
 			p = p->next;
 			i++;
 		}
-		return NULL;
+		throw 1;
+	}
+	T first(){
+		if(head == NULL)
+			throw 1;
+		return head->data;
 	}
 	void reverse(){
 		Node<T>* previous;
@@ -86,7 +94,8 @@ public:
 		head = previous;
 	}
 	bool isEmpty(){return head == NULL;}
-	int getLength(){return length;}
+	int size(){return this->length;} // API methods
+	void empty(){makeEmpty();} // API methods
 
 	void print(){
 		Node<T>* p = head;
@@ -98,36 +107,71 @@ public:
 		}
 		std::cout << std::endl;
 	}
+	void push(T newData){
+		this->length = this->length + 1;
+		LinkedList<T>::Push(&head, newData);
+	}
+	T pop(){
+		this->length = this->length - 1;
+		return LinkedList<T>::Pop(&head);
+	}
+	T operator[](int i) const {return this->getItem(i);}
+	// TODO: document this bug:
+	// T& operator[](int i) {return 100;}
+	// T& operator[](unsigned int i){ return getItem(i);}
+	// const T& operator[](unsigned int i) const{ return getItem(i);}
+
+	// Add this method to the object's API (calling the static version)
+	void frontBackSplit(Node<T> ** frontRef, Node<T> ** backRef){ 
+		return LinkedList<T>::FrontBackSplit(this->head, frontRef, backRef);
+	}
+
+
+
 
 	// Methods from Linked Lists Problems
+	// These methods are the static versions that come in the PDF
+	// http://cslibrary.stanford.edu/105/LinkedListProblems.pdf
+	// ==============================================================================================================
 
 	static void FrontBackSplit(Node<T>* source, Node<T>** frontRef, Node<T>** backRef){
+		// TODO: handle 0 elements?
+
+		// Handle the case where there is only one element
+		if(source->next == NULL) { 
+			*frontRef = source;
+			*backRef = source;
+			return;
+		}
+
 		Node<T>* tmp = new Node<T>;
 		Node<T>* p = tmp;
 		Node<T>* f = tmp;
 		tmp->next = source;
+
 		while(p != NULL && p->next != NULL){
-			p = p->next->next;
+			p = p->next->next; // Tortoise and the Hare
 			f = f->next;
 		}
+
 		*backRef = f->next;
 		f->next = NULL;
 		*frontRef = source;
 	}
 	static void moveNode(Node<T>** destRef, Node<T>** sourceRef){
 		assert(*sourceRef != NULL);
-		int val = Pop(&(*sourceRef));
+		T val = Pop(&(*sourceRef));
 		Push(&(*destRef), val);
 	}
-	static int Pop(Node<T>** headRef){
+	static T Pop(Node<T>** headRef){
 		assert(*headRef != NULL);
 		Node<T>* p = *headRef;
 		*headRef = (*headRef)->next;
-		int data = p->data;
+		T data = p->data;
 		delete p;
 		return data;
 	}
-	static void Push(Node<T>** headRef, int newData){
+	static void Push(Node<T>** headRef, T newData){
 		Node<T>* p = new Node<T>(newData);
 		p->next = *headRef;
 		*headRef = p;
@@ -178,7 +222,11 @@ public:
 			*headRef = SortedMerge(a, b);
 		}
 	}
+
+
 	Node<T>* head;
+
 private:
 	int length;
+
 };
